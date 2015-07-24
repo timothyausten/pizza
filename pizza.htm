@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Timothy Austen - Pizza Real Estate Calculator</title>
+        <meta name=description content="Pizza Real Estate Calculator">
+        <meta name=keywords content="pizza, real estate, calculator"> 
+        <meta name="revisit after" content="15 days">
+        <meta name=ROBOTS content=all>
+        <meta name="viewport" content="width=device-width, user-scalable=yes">
+        <link rel="stylesheet" type="text/css" href="main.css" />
+    </head>
+
+    <body>
+        <header>
+            <div class="headerTextWidth">
+                <h1 class="headerH1" style="font-size: 2em">TIMOTHY AUSTEN</h1>
+                <h2>Pizza Real Estate Calculator</h2>
+            </div>
+        </header>
+
+        <form action="javascript:void(calc(true))">
+            <table style="margin:0 auto;width:10em;">
+                <tr>
+                    <th>Size</th>
+                    <th>Diameter (cm)</th>
+                    <th>Price</th>
+                    <th>Price/m<sup>2</sup></th>
+                </tr>
+                <tr>
+                    <td>Small</td>
+                    <td><input id="diameter0" type="text"  style="width:4em" /></td>
+                    <td><input id="price0"    type="text" style="width:4em" /></td>
+                    <td id="result0" align="right"></td>
+                </tr>
+                <tr>
+                    <td>Medium</td>
+                    <td><input id="diameter1" type="text"  style="width:4em" /></td>
+                    <td><input id="price1" type="text"  style="width:4em" /></td>
+                    <td id="result1" align="right"></td>
+                </tr>
+                <tr>
+                    <td>Large</td>
+                    <td><input id="diameter2" type="text"  style="width:4em" /></td>
+                    <td><input id="price2" type="text"  style="width:4em" /></td>
+                    <td id="result2" align="right"></td>
+                </tr>
+            </table>
+            <p style="text-align:center"><input type="submit" value="Calculate" /></p>
+        </form>
+
+        <script>
+            function calc(buttonPushed) {
+                function pizza(diameter, price, size) {
+                    this.priceEl = document.getElementById('price' + size);
+                    this.diameterEl = document.getElementById('diameter' + size);
+                    this.resultEl = document.getElementById('result' + size);
+
+                    this.price = buttonPushed ? Number(this.priceEl.value) : price;
+                    this.diameter = buttonPushed ? Number(this.diameterEl.value) : diameter;
+
+                    // this.price = price;
+                    // this.diameter = diameter;
+
+                    this.result = (this.price / Math.pow(this.diameter / 2, 2) / Math.PI * 10000).toFixed(2);
+
+                    this.priceEl.setAttribute('value', this.price);
+                    this.diameterEl.setAttribute('value', this.diameter);
+                    this.resultEl.innerHTML = this.result;	
+                }
+
+                var size0 = new pizza(30, 9.5, 0),
+                    size1 = new pizza(40, 19, 1),
+                    size2 = new pizza(48, 28, 2);
+            }
+            calc(false);
+        </script>
+    </body>
+</html>
