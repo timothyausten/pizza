@@ -19,13 +19,21 @@
             </div>
         </header>
 
+
+        <p>
+            <span> Measurements: </span>
+            <span style="font-weight:bold;" id="metric">Metric</span>
+            <span> &nbsp; &middot; &nbsp;</span>
+            <span style="color:gray;" id="imperial">Imperial</span>
+        </p>
+        
         <form action="javascript:void(calc(true))">
             <table style="margin:0 auto;width:10em;">
                 <tr>
                     <th>Size</th>
-                    <th>Diameter (cm)</th>
+                    <th id="dimensionLabel">Diameter (cm)</th>
                     <th>Price</th>
-                    <th>Price/m<sup>2</sup></th>
+                    <th id="areaLabel">Price/m<sup>2</sup></th>
                 </tr>
                 <tr>
                     <td>Small</td>
@@ -50,7 +58,32 @@
         </form>
 
         <script>
-            function calc(buttonPushed) {
+            var metricButton = document.getElementById('metric'),
+                imperialButton = document.getElementById('imperial'),
+                areaLabel = document.getElementById('areaLabel'),
+                dimensionLabel = document.getElementById('dimensionLabel');
+
+            metricButton.onclick = function() {
+                calc(true, true);
+                metricButton.style.fontWeight = 'bold';
+                imperialButton.style.fontWeight = '';
+                metricButton.style.color = '';
+                imperialButton.style.color = 'gray';
+                areaLabel.innerHTML = 'Price/m<sup>2</sup>';
+                dimensionLabel.innerHTML = 'Diameter (cm)';
+            };
+            imperialButton.onclick = function() {
+                calc(true, false);
+                metricButton.style.fontWeight = '';
+                imperialButton.style.fontWeight = 'bold';
+                metricButton.style.color = 'gray';
+                imperialButton.style.color = '';
+                areaLabel.innerHTML = 'Price/ft<sup>2</sup>';
+                dimensionLabel.innerHTML = 'Diameter (inches)';
+            };
+
+            
+            function calc(buttonPushed, metric) {
                 function pizza(diameter, price, size) {
                     this.priceEl = document.getElementById('price' + size);
                     this.diameterEl = document.getElementById('diameter' + size);
@@ -62,7 +95,12 @@
                     // this.price = price;
                     // this.diameter = diameter;
 
-                    this.result = (this.price / Math.pow(this.diameter / 2, 2) / Math.PI * 10000).toFixed(2);
+                    if (metric) {
+                        this.result = (this.price / Math.pow(this.diameter / 2, 2) / Math.PI * 10000).toFixed(2);
+                    } else {
+                        this.result = (this.price / Math.pow(this.diameter / 2, 2) / Math.PI * 144).toFixed(2);
+                    }
+
 
                     this.priceEl.setAttribute('value', this.price);
                     this.diameterEl.setAttribute('value', this.diameter);
@@ -73,7 +111,7 @@
                     size1 = new pizza(40, 19, 1),
                     size2 = new pizza(48, 28, 2);
             }
-            calc(false);
+            calc(false, true);
         </script>
     </body>
 </html>
