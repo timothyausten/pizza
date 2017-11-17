@@ -27,7 +27,7 @@
             <span style="color:gray;" id="imperial">Imperial</span>
         </p>
         
-        <form action="javascript:void(calc(true))">
+        <form action="javascript:void(calc(true, metric))">
             <table style="margin:0 auto;width:10em;">
                 <tr>
                     <th>Size</th>
@@ -37,20 +37,20 @@
                 </tr>
                 <tr>
                     <td>Small</td>
-                    <td><input id="diameter0" type="text"  style="width:4em" /></td>
-                    <td><input id="price0"    type="text" style="width:4em" /></td>
+                    <td><input id="diameter0" type="text"  style="width:4em" onchange="calc(true, metric)"/></td>
+                    <td><input id="price0"    type="text" style="width:4em" onchange="calc(true, metric)"/></td>
                     <td id="result0" align="right"></td>
                 </tr>
                 <tr>
                     <td>Medium</td>
-                    <td><input id="diameter1" type="text"  style="width:4em" /></td>
-                    <td><input id="price1" type="text"  style="width:4em" /></td>
+                    <td><input id="diameter1" type="text"  style="width:4em" onchange="calc(true, metric)"/></td>
+                    <td><input id="price1" type="text"  style="width:4em" onchange="calc(true, metric)"/></td>
                     <td id="result1" align="right"></td>
                 </tr>
                 <tr>
                     <td>Large</td>
-                    <td><input id="diameter2" type="text"  style="width:4em" /></td>
-                    <td><input id="price2" type="text"  style="width:4em" /></td>
+                    <td><input id="diameter2" type="text"  style="width:4em" onchange="calc(true, metric)"/></td>
+                    <td><input id="price2" type="text"  style="width:4em" onchange="calc(true, metric)"/></td>
                     <td id="result2" align="right"></td>
                 </tr>
             </table>
@@ -61,10 +61,12 @@
             var metricButton = document.getElementById('metric'),
                 imperialButton = document.getElementById('imperial'),
                 areaLabel = document.getElementById('areaLabel'),
-                dimensionLabel = document.getElementById('dimensionLabel');
+                dimensionLabel = document.getElementById('dimensionLabel'),
+                metric = true;
 
             metricButton.onclick = function() {
-                calc(true, true);
+                metric = true;
+                calc(true, metric);
                 metricButton.style.fontWeight = 'bold';
                 imperialButton.style.fontWeight = '';
                 metricButton.style.color = '';
@@ -73,7 +75,8 @@
                 dimensionLabel.innerHTML = 'Diameter (cm)';
             };
             imperialButton.onclick = function() {
-                calc(true, false);
+                metric = false;
+                calc(true, metric);
                 metricButton.style.fontWeight = '';
                 imperialButton.style.fontWeight = 'bold';
                 metricButton.style.color = 'gray';
